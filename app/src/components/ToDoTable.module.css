@@ -1,0 +1,7 @@
+.ToDoTableBlock{
+    width: 100%;
+}
+
+td > button {
+    margin-left: 10px;
+}

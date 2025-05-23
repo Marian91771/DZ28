@@ -1,6 +1,6 @@
 import { Form, Formik, ErrorMessage, Field } from 'formik';
 import * as Yup from 'yup';
-import './ToDoInput.css'
+import style from './ToDoInput.module.css';
 
 const ToDoSchema = Yup.object({
     ToDo: Yup.string()
@@ -9,22 +9,23 @@ const ToDoSchema = Yup.object({
         .required('Required'),
 });
 
-export default function ToDoInput({onAdd}) {
+export default function ToDoInput({onAdd, editValue }) {
     return (
         <Formik
-            initialValues = {{ToDo: ''}}
+            initialValues = {{ToDo: editValue }}
+            enableReinitialize={true}
             validationSchema = {ToDoSchema}
             onSubmit = {(values, {resetForm}) => {
                 onAdd(values)
                 resetForm();
             }}>
-                <Form className='FormikBlock'>
-                    <p className='ToDoLable'>Add Task</p>
-                    <div  className='ToDoForm'>
-                        <Field name='ToDo' placeholder='Task' className='ToDoInput'/>
-                        <button type='submit'>Add task</button>                        
+                <Form className={style.FormikBlock}>
+                    <p className={style.ToDoLable}>{editValue ? 'Edit task' : 'Add task'}</p>
+                    <div  className={style.ToDoForm}>
+                        <Field name='ToDo' placeholder='Task' className={style.ToDoInput}/>
+                        <button type='submit'>{editValue ? 'Edit' : 'Add'}</button>                        
                     </div>
-                    <ErrorMessage name='ToDo' component='div' className='ToDoError'/>
+                    <ErrorMessage name='ToDo' component='div' className={style.ToDoError}/>
                 </Form>
         </Formik>
     )
